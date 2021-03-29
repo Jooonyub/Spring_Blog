@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <title>️준엽이의 항해 블로그</title>
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}">
+
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+
+    <link th:href="@{https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap}" rel="stylesheet">
+
+    <script th:src="@{/articleview.js}"></script>
+
+</head>
+
+<body th:style="@{background-image: url('/images/background.png'); background-repeat: no-repeat; background-size: 100%; width:auto; height: 100%;}">
+    <!--
+    <div class="background-header">
+
+    </div>
+    <div class="background-body">
+
+    </div>
+    -->
+    <div class="wrap">
+        <div class="header">
+            <h2>⛵️나만의 항해 블로그⛵</h2>
+            <br>
+            <p>
+                게시글 조회 페이지
+            </p>
+        </div>
+        <!--<div class="area-write">
+            <input type="text" placeholder="게시글의 제목을 입력하세요" name="title" id="title">
+            <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+                      rows="10"></textarea>
+            <img src="images/send.png" alt="" onclick="writePost()">
+        </div>-->
+
+        <div id="show-article" class="area-read">
+            <div class="card cardblock" th:each="article: ${article}" th:onclick="window.location.href='/'">
+                <div class="metadata">
+                    <div class="title" th:text="${article.title}">
+                    </div>
+                    <div th:id="${article.username}" class="username" th:text="${article.username}">
+                    </div>
+                    <div class="date" th:text="${article.createdAt}">
+                    </div>
+                </div>
+                <!-- contents 조회/수정 영역-->
+                <div class="contents">
+                    <div th:id="${article.contents}" class="text" th:text="${article.contents}" >
+                    </div>
+                </div>
+                <!-- 버튼 영역-->
+                <div class="footer">
+                    <button type="button" class="footer btn btn-info btn-lg" id="gobackBtn" th:onclick="window.location.href='/'">목록으로 돌아가기</button>
+                    <!--
+                    <img th:id="${article.edit}" th:onclick="|javascript:editPost('${article.id}')|" class="icon-start-edit" th:src="@{/images/edit.png}" alt="">
+                    <img th:id="${article.delete}" th:onclick="|javascript:deleteOne('${article.id}')|" class="icon-delete" th:src="@{/images/delete.png}" alt="">
+                    <img th:id="${article.submit}" th:onclick="|javascript:submitEdit('${article.id}')|" class="icon-end-edit" th:src="@{/images/done.png}" alt="">
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="준엽이의 항해블로그">
+    <meta property="og:description" content="프로젝트 진행시 어려웠던 부분을 기록한 저널블로그입니다.">
+    <meta property="og:image" content="images/Hamburg.png">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>️준엽이의 항해 블로그</title>
+    <link rel="shortcut icon" href="/images/favicon.png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+
+    <script src="basic.js"></script>
+
+</head>
+
+<body class="background">
+
+
+
+
+    <!--
+    <div class="background-header">
+
+    </div>
+    <div class="background-body">
+
+    </div>
+    -->
+    <div class="wrap">
+        <!--페이지 제목과 해당페이지 기능 안내-->
+        <div class="header">
+            <h2>⛵️나만의 항해 블로그⛵</h2>
+            <br>
+            <p class="sulmyung">
+                전체 게시글 목록 조회 페이지
+            </p>
+        </div>
+
+        <!--<div id="search-area">
+            <div>
+                <input type="text" id="query">
+            </div>
+            <div id="search-result-box">
+                <div class="search-itemDto">
+                    <div class="search-itemDto-left">
+                        <img src="https://shopping-phinf.pstatic.net/main_2399616/23996167522.20200922132620.jpg?type=f300" alt="">
+                    </div>
+                    <div class="search-itemDto-center">
+                        <div>Apple 아이맥 27형 2020년형 (MXWT2KH/A)</div>
+                        <div class="price">
+                            2,289,780
+                            <span class="unit">원</span>
+                        </div>
+                    </div>
+                    <div class="search-itemDto-right">
+                        <img src="images/icon-save.png" alt="" onclick='addProduct()'>
+                    </div>
+                </div>
+            </div>
+            <div id="container" class="popup-container">
+                <div class="popup">
+                    <button id="close" class="close">
+                        X
+                    </button>
+                    <h1>⏰최저가 설정하기</h1>
+                    <p>최저가를 설정해두면 선택하신 상품의 최저가가 떴을 때<br/> 표시해드려요!</p>
+                    <div>
+                        <input type="text" id="myprice" placeholder="200,000">원
+                    </div>
+                    <button class="cta" onclick="setMyprice()">설정하기</button>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="">
+
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-lg" id="myBtn">글 작성하기</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">글 작성하기</h4>
+                        </div>
+                        <div class="modal-body card">
+                            <!--<p>게시글을 작성해주세요.</p>-->
+                            <div class="mb-3">
+                                <label for="title" class="form-label">게시글 제목</label>
+                                <input type="email" class="form-control" id="title" placeholder="제목을 입력해주세요">
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">작성자 이름</label>
+                                <input type="email" class="form-control" id="username" placeholder="제목을 입력해주세요">
+                            </div>
+                            <div class="mb-3">
+                                <label for="contents" class="form-label">게시글 작성하기</label>
+                                <textarea class="form-control" id="contents" placeholder="내용을 작성해주세요" rows="3"></textarea>
+                            </div>
+
+                                <button type="button" class="btn btn-info" id="completeBtn" onclick="writeArticle()">
+                                    <div>
+                                        작성완료 <img src="images/writing.png" class="icon-write" alt="" >
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    <!--<div class="area-write">
+        <input type="text" placeholder="게시글의 제목을 입력하세요" name="title" id="title">
+        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+                  rows="10"></textarea>
+
+        <img src="images/send.png" alt="" onclick="writePost()">
+    </div>-->
+    <div class="list">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td class="index">#</td>
+                    <td class="title">제목</td>
+                    <td class="username">작성자</td>
+                    <td class="date">작성한 시간</td>
+                </tr>
+            </thead>
+            <tbody id="article-infos">
+                <tr>
+                    <td class="index">1</td>
+                    <td class="title">테스트1</td>
+                    <td class="username">이름1</td>
+                    <td class="date">시간1</td>
+                </tr>
+                <tr>
+                    <td class="index">2</td>
+                    <td class="title">테스트2</td>
+                    <td class="username">이름2</td>
+                    <td class="date">시간2</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!--<div id="cards-box" class="area-read">
+        <div class="card">
+            date/username 영역
+            <div class="metadata">
+                <div class="title">
+                    제목
+                </div>
+                <div id="1-username" class="username">
+                    anonymous
+                </div>
+                <div class="date">
+                    October 10, 2020
+                </div>
+            </div>
+             contents 조회/수정 영역
+
+            <div class="contents">
+                <div id="1-contents" class="text">
+                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
+                </div>
+                <div id="1-editarea" class="edit">
+                    <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
+                </div>
+            </div>
+
+             버튼 영역
+
+            <div class="footer">
+                <img id="1-edit" onclick="editPost('1')" class="icon-start-edit" src="images/edit.png" alt="">
+                <img id="1-delete" onclick="deleteOne('1')" class="icon-delete" src="images/delete.png" alt="">
+                <img id="1-submit" onclick="submitEdit('1')" class="icon-end-edit" src="images/done.png" alt="">
+            </div>
+
+        </div>
+    </div>
+    -->
+
+</body>
+
+</html>
