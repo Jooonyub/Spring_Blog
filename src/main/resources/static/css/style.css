@@ -59,7 +59,7 @@ body {
     height: 100%;
     width: auto;
 
-    background-image: url("images/background.png");
+    background-image: url("../images/background.png");
     background-size: 100%;
     background-repeat: no-repeat;
     /*background-color: #339af0*/
@@ -160,7 +160,7 @@ textarea.field::placeholder {
 }
 
 .list {
-    width: 640px;
+    width: 720px;
     margin: auto;
     border-radius: 5px;
     background-color: #ffffff;
@@ -169,7 +169,7 @@ textarea.field::placeholder {
 
 
 .list .title {
-    width: 250px;
+    width: 360px;
 
 }
 
@@ -235,13 +235,13 @@ textarea.field::placeholder {
 
  */
 
-#gobackBtn {
-    display: block;
-    margin: auto;
-    height: 48px;
-    /*margin: auto;*/
-    cursor: pointer;
-}
+/*#gobackBtn {*/
+/*    display: block;*/
+/*    margin: auto;*/
+/*    height: 48px;*/
+/*    !*margin: auto;*!*/
+/*    cursor: pointer;*/
+/*}*/
 
 .footer img.icon-start-edit {
     cursor: pointer;
@@ -276,4 +276,36 @@ textarea.field::placeholder {
 
 #cards-box {
     margin-top: 12px;
+}
+
+/*여기서부터는 상세페이지에 대한 css*/
+.article {
+    width: 720px;
+    margin: auto;
+}
+
+.footer-btns .row {
+    margin : 0px 10px 10px 0px;
+}
+
+.comments_container {
+    width : 720px;
+    margin: auto;
+}
+
+.embed-submit-field {
+    width: 720px;
+    display:inline-block;
+    position:relative;
+}
+
+.comment-textarea {
+    width: 720px;
+    display:block;
+}
+
+.comment_submit {
+    position:absolute;
+    bottom:10px;
+    right:10px;
 }

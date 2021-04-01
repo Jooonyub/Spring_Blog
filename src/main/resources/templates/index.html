@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns="http://www.w3.org/1999/xhtml"
+>
 
 <head>
     <meta charset="UTF-8">
@@ -9,34 +13,28 @@
     <meta property="og:description" content="프로젝트 진행시 어려웠던 부분을 기록한 저널블로그입니다.">
     <meta property="og:image" content="images/Hamburg.png">
 
-    <link rel="stylesheet" href="style.css">
+<!--    <link rel="stylesheet" href="../static/css/style.css" type = "text/css">-->
+    <link rel="stylesheet" href="/css/style.css">
+<!--    <script src="../static/js/basic.js"></script>-->
 
+    <link rel="shortcut icon" href="/images/favicon.ico">
     <title>️준엽이의 항해 블로그</title>
-    <link rel="shortcut icon" href="/images/favicon.png">
+<!--    <link rel="shortcut icon" href="/images/favicon.png">-->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 
-    <script src="basic.js"></script>
-
+    <!--    <script src="../static/basic.js"></script>-->
+    <script src="/js/basic.js"></script>
 </head>
 
 <body class="background">
 
 
-
-
-    <!--
-    <div class="background-header">
-
-    </div>
-    <div class="background-body">
-
-    </div>
-    -->
     <div class="wrap">
         <!--페이지 제목과 해당페이지 기능 안내-->
         <div class="header">
@@ -47,46 +45,21 @@
             </p>
         </div>
 
-        <!--<div id="search-area">
-            <div>
-                <input type="text" id="query">
-            </div>
-            <div id="search-result-box">
-                <div class="search-itemDto">
-                    <div class="search-itemDto-left">
-                        <img src="https://shopping-phinf.pstatic.net/main_2399616/23996167522.20200922132620.jpg?type=f300" alt="">
-                    </div>
-                    <div class="search-itemDto-center">
-                        <div>Apple 아이맥 27형 2020년형 (MXWT2KH/A)</div>
-                        <div class="price">
-                            2,289,780
-                            <span class="unit">원</span>
-                        </div>
-                    </div>
-                    <div class="search-itemDto-right">
-                        <img src="images/icon-save.png" alt="" onclick='addProduct()'>
-                    </div>
-                </div>
-            </div>
-            <div id="container" class="popup-container">
-                <div class="popup">
-                    <button id="close" class="close">
-                        X
-                    </button>
-                    <h1>⏰최저가 설정하기</h1>
-                    <p>최저가를 설정해두면 선택하신 상품의 최저가가 떴을 때<br/> 표시해드려요!</p>
-                    <div>
-                        <input type="text" id="myprice" placeholder="200,000">원
-                    </div>
-                    <button class="cta" onclick="setMyprice()">설정하기</button>
-                </div>
-            </div>
-        </div>-->
-
-        <div class="">
+        <div class="modal_container">
 
             <!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-info btn-lg" id="myBtn">글 작성하기</button>
+<!--            <button class="btn btn-info btn-lg" id="myBtn">글 작성하기</button>-->
+            <div class = check_user>
+                <div th:if="!${username}">
+                    <button class="link-signup btn btn-info btn-lg" onclick="window.location.href='/api/login'">로그인 / 회원가입</button>
+                </div>
+                <div th:if="${username}">
+                    <div th:text="${username}" class="fas fa-sign-out-alt">님 안녕하세요. 글을 남기실 수 있습니다.</div>
+                    <button type="button" class="btn btn-info btn-lg" id="myBtn">글 작성하기</button>
+                </div>
+
+            </div>
+
 
             <!-- Modal -->
             <div class="modal fade" id="myModal" role="dialog">
@@ -106,7 +79,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">작성자 이름</label>
-                                <input type="email" class="form-control" id="username" placeholder="제목을 입력해주세요">
+                                <div th:if="${username}"><div id="username" th:text="${username}" th:value="${username}"></div></div>
+<!--타임리프로 값을 채워서 이를 .text()로 넣으려 하니 디스패쳐서블릿 에러 발생. not null이 와야 하나 과정중에 null이거나 transient value로 인식되어서 생기는 500 에-->
+                                <!--                                <input type="text" class="form-control" id="username" placeholder="이름을 입력하세요">-->
                             </div>
                             <div class="mb-3">
                                 <label for="contents" class="form-label">게시글 작성하기</label>
@@ -115,7 +90,7 @@
 
                                 <button type="button" class="btn btn-info" id="completeBtn" onclick="writeArticle()">
                                     <div>
-                                        작성완료 <img src="images/writing.png" class="icon-write" alt="" >
+                                        작성완료 <img src="/images/writing.png" class="icon-write" alt="" >
                                     </div>
                                 </button>
                             </div>
@@ -163,44 +138,6 @@
             </tbody>
         </table>
     </div>
-
-
-    <!--<div id="cards-box" class="area-read">
-        <div class="card">
-            date/username 영역
-            <div class="metadata">
-                <div class="title">
-                    제목
-                </div>
-                <div id="1-username" class="username">
-                    anonymous
-                </div>
-                <div class="date">
-                    October 10, 2020
-                </div>
-            </div>
-             contents 조회/수정 영역
-
-            <div class="contents">
-                <div id="1-contents" class="text">
-                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
-                </div>
-                <div id="1-editarea" class="edit">
-                    <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-                </div>
-            </div>
-
-             버튼 영역
-
-            <div class="footer">
-                <img id="1-edit" onclick="editPost('1')" class="icon-start-edit" src="images/edit.png" alt="">
-                <img id="1-delete" onclick="deleteOne('1')" class="icon-delete" src="images/delete.png" alt="">
-                <img id="1-submit" onclick="submitEdit('1')" class="icon-end-edit" src="images/done.png" alt="">
-            </div>
-
-        </div>
-    </div>
-    -->
 
 </body>
 

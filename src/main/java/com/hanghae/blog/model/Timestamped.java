@@ -1,4 +1,4 @@
-package com.hanghae.blog.domain;
+package com.hanghae.blog.model;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

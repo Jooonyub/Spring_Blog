@@ -1,5 +1,6 @@
-package com.hanghae.blog.domain;
+package com.hanghae.blog.model;
 
+import com.hanghae.blog.dto.ArticleRequestDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter //클래스 정보를 가져올 때
 @RequiredArgsConstructor    //기본생성자 자동생성 - 새로운 변수 선언시 필요
 @Entity //테이블과 연계됨을 스프링에게 알려줌
-public class Article extends Timestamped{
+public class Article extends Timestamped {
     //제목, 작성자명, 작성내용
     //작성날짜의 경우 LocalDateTime 상속
 
@@ -23,30 +24,51 @@ public class Article extends Timestamped{
     private String title;
 
     @Column(nullable = false)
-    private String username;
+    private String user;
 
     //얘는 좀 더 생각해보기(당장 작성글을 쓰는 것은 아니기 때문에..)
     @Column(nullable = false)
     private String contents;
 
-    public Article(String title, String username, String contents) {
+    public Article(String title, String user, String contents) {
         this.title = title;
-        this.username = username;
+        this.user = user;
         this.contents = contents;
     }
 
     public Article(ArticleRequestDto requestDto) {
         this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
+        this.user = requestDto.getUser();
         this.contents = requestDto.getContents();
     }
 
     //업데이트 메소드 추가하기
     public void update(ArticleRequestDto requestDto) {
         this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
+        this.user = requestDto.getUser();
         this.contents = requestDto.getContents();
     }
+
+    /*
+    public Article(String title, String user, String contents) {
+        this.title = title;
+        this.user = user;
+        this.contents = contents;
+    }
+
+    public Article(ArticleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.user = requestDto.getUser();
+        this.contents = requestDto.getContents();
+    }
+
+    //업데이트 메소드 추가하기
+    public void update(ArticleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.user = requestDto.getUser();
+        this.contents = requestDto.getContents();
+    }
+     */
 
 
 }

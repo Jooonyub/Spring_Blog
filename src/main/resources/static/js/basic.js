@@ -1,42 +1,30 @@
 // 미리 작성된 영역 - 수정하지 않으셔도 됩니다.
 // 사용자가 내용을 올바르게 입력하였는지 확인합니다.
+
 function isValidContents(contents) {
     if (contents == '') {
         alert('내용을 입력해주세요');
         return false;
     }
     //trim() : 앞뒤의 공백을 잘라(중간공백은 포함)
-    if (contents.trim().length > 140) {
-        alert('공백 포함 140자 이하로 입력해주세요');
+    if (contents.trim().length > 250) {
+        alert('공백 포함 250자 이하로 입력해주세요');
         return false;
     }
     return true;
 }
-/*
-// 익명의 username을 만듭니다.
-//수정필요! -> 작성자 이름을 받는 쪽으
-function genRandomName(length) {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        let number = Math.random() * charactersLength;
-        let index = Math.floor(number);
-        result += characters.charAt(index);
-    }
-    return result;
-}
+
 
 // 수정 버튼을 눌렀을 때, 기존 작성 내용을 textarea 에 전달합니다.
 // 숨길 버튼을 숨기고, 나타낼 버튼을 나타냅니다.
 function editPost(id) {
     showEdits(id);
     let contents = $(`#${id}-contents`).text().trim();
-    //$(`#${id}-textarea`).val(contents);
+    $(`#${id}-textarea`).val(contents);
 }
 
 function showEdits(id) {
-    //$(`#${id}-editarea`).show();
+    $(`#${id}-editarea`).show();
     $(`#${id}-submit`).show();
     $(`#${id}-delete`).show();
 
@@ -45,20 +33,42 @@ function showEdits(id) {
 }
 
 function hideEdits(id) {
-    //$(`#${id}-editarea`).hide();
+    $(`#${id}-editarea`).hide();
     $(`#${id}-submit`).hide();
     $(`#${id}-delete`).hide();
 
     $(`#${id}-contents`).show();
     $(`#${id}-edit`).show();
 }
-*/
+
+//게시글 상세페이지에서 목록페이지로 이동
+function onClickMainPage() {
+    window.location.href = "/index.html";
+}
+
+//게시글 상세페이지에서 수정페이지로 이동
+function onClickMoveEditpage(id) {
+    window.location.href = "/edit.html?" + id;
+}
+
+//게시글 상세페이지에서 게시글 삭제
+function onClickArticleDelete(id) {
+    $.ajax({
+        type: "DELETE",
+        url: "/board/" + id,
+        success: function (response) {
+            alert("삭제 완료!");
+            window.location.href = "/index.html";
+        }
+    });
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 여기서부터 코드를 작성해주시면 됩니다.
 
 $(document).ready(function () {
     // HTML 문서를 로드할 때마다 실행합니다.
+    alert("안녕하세요!")
     getMessages();
     $("#myBtn").click(function(){
         $("#myModal").modal();
@@ -78,7 +88,7 @@ function getMessages() {
         success: function (response) {
             for (let i = 0; i < response.length; i++) {
                 let message = response[i];
-                let index = i+1
+                let index = i+1;
                 let id = message['id'];
                 let title = message['title']
                 let username = message['username'];
@@ -94,7 +104,6 @@ function getMessages() {
 function addHTML(index, id, title, username, contents, createdAt) {
 
     // 1. HTML 태그를 만듭니다.
-    //let tempHtml = `<div class="card cursor_active" onclick="location.href='articleview.html'">
     let tempHtml = `<tr class="cursor_active" onclick="window.location.href='/api/articles/detail/${id}'">
                         <td class="index">${index}</td>
                         <td id="${id}-title" class="title">${title}</td>
@@ -103,113 +112,60 @@ function addHTML(index, id, title, username, contents, createdAt) {
                     </tr>`
     $('#article-infos').append(tempHtml);
 }
-/*
-<div class="card cursor_active" onclick="window.location.href='/api/articles/detail/${id}'">
-        <!-- date/username 영역 -->
-    <div class="metadata">
-        <div id="${id}-title" class="title">
-            ${title}
-        </div>
-        <div id="${id}-username" class="username">
-            ${username}
-        </div>
-        <div id="${id}-createdAt" class="date">
-            ${createdAt}
-        </div>
-    </div>
-</div>
-    // 2. #cards-box 에 HTML을 붙인다.
-    $('#cards-box').append(tempHtml);
-*/
 
+///////////////////detail.html JS
+// 메모를 불러와서 보여줍니다.
+// 수정에 관한 부분을 할꺼면 여기서 가능하도록 처리!
+function getDetail(id) {
+    $.ajax({
+        type: "GET",
+        url: "/board/articles/detail/" + id,
+        success: function (response) {
+            let article = response;
+            let id = article.id;
+            let title = article.title;
+            let username = article.username;
+            let contents = article.contents;
+            let createdAt = article.createdAt.split('T');
+            createdAt[1] = createdAt[1].split('.')[0];
+            addDetailHTML(id, title, username, contents, createdAt);
+        }
+    })
+}
 
-
-
-/*
-// 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
-function addHTML(id, title, username, contents, createdAt) {
-
-    // 1. HTML 태그를 만듭니다.
-    //let tempHtml = `<div class="card cursor_active" onclick="location.href='articleview.html'">
-    let tempHtml = `<div class="card cursor_active" onclick="window.location.href='/api/articles/detail/${id}'">
-                            <!-- date/username 영역 -->
+// 저장된 글을 볼 수 있도록 HTML로 그려줌
+function addDetailHTML(id, title, username, contents, createdAt) {
+    let tempHtml = `<div class="card cardblock" onclick="window.location.href='/'">
                         <div class="metadata">
-                            <div id="${id}-title" class="title">
+                            <div class="title">
                                 ${title}
-                            </div>                       
-                            <div id="${id}-username" class="username">
+                            </div>
+                            <div id="username" class="username" >
                                 ${username}
                             </div>
-                            <div id="${id}-createdAt" class="date">
+                            <div class="date" >
                                 ${createdAt}
                             </div>
                         </div>
-                            <!-- contents 조회/수정 영역-->
-                        <!--
+                        <!-- contents 조회/수정 영역-->
                         <div class="contents">
-                            <div id="${id}-contents" class="text">
+                            <div id="contents" class="text" >
                                 ${contents}
                             </div>
-                        </div> 
-                        -->                     
-                            <!-- 버튼 영역-->
-                        <!--
-                        <div class="footer">
-                            <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('${id}')">
-                            <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('${id}')">
-                            <img id="${id}-submit" class="icon-end-edit" src="images/done.png" alt="" onclick="submitEdit('${id}')">
                         </div>
-                        -->
+                        <div class="footer" style="text-align: right">
+                            <button type="button" class="btn btn-success" onclick="onClickMainPage()">목록으로 이동</button>
+                            <button type="button" class="btn btn-info" onclick="onClickMoveEditpage(${id})">수정하기</button>
+                            <button type="button" class="btn btn-danger" onclick="onClickArticleDelete(${id})">삭제하기</button>
+                        </div>
+                        
                     </div>`;
-    let tempHtml = `<div class="card">
-                        <div class="title">
-                            <h2 id="${id}-title" class="title">
-                                ${title}
-                            </h2>
-                        </div>          
-                                        <!-- date/username 영역 -->
-                        <div class="metadata">
-                        <div id="${id}-createdAt" class="date">
-                            ${createdAt}
-                        </div>
-                        <div id="${id}-username" class="username">
-                            ${username}
-                        </div>
-                        </div>
-                            <!-- contents 조회/수정 영역-->
-                        <div class="contents">
-                        <div id="${id}-contents" class="text">
-                            ${contents}
-                        </div>
-                        <div id="${id}-editarea" class="edit">
-                            <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-                        </div>
-                        </div>
-                            <!-- 버튼 영역-->
-                        <div class="footer">
-                            <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('${id}')">
-                            <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('${id}')">
-                            <img id="${id}-submit" class="icon-end-edit" src="images/done.png" alt="" onclick="submitEdit('${id}')">
-                        </div>
-                    </div>`;
-     */
-/*
-    // 2. #cards-box 에 HTML을 붙인다.
-    $('#cards-box').append(tempHtml);
+    $('#show-article-datail').append(tempHtml);
 }
-*/
-/*
-$(document).ready(function(){
-    $("#myBtn").click(function(){
-        $("#myModal").modal();
-    });
-});
-
- */
 
 
 
-// 메모를 생성합니다.
+// 게시글 생성합니다.
 function writeArticle() {
     let title = $('#title').val();
     // 1. 작성한 메모를 불러옵니다.
@@ -218,13 +174,23 @@ function writeArticle() {
     if (isValidContents(contents) == false) {
         return;
     }
-    // 3. genRandomName 함수를 통해 익명의 username을 만듭니다.
-    let username = $('#username').val();
+    // 3. username은 로그인되어있는 사용자의 이름을 씁니다.
+    let username = $('#username').text();
     //let username = genRandomName(10);
     // 4. 전달할 data JSON으로 만듭니다.
+    if (username == '') {
+        alert('이름을 적어주세요.');
+        return;
+    } else if (title == '') {
+        alert('제목을 적어주세요.');
+        return;
+    } else if (contents == '') {
+        alert('내용을 적어주세요.');
+        return;
+    }
     let data = {'title':title, 'username': username, 'contents': contents};
     // 5. POST /api/memos 에 data를 전달합니다.
-    //이전까지 ARC 통해 해오던 것을 CLI로 하는 방
+    //이전까지 ARC 통해 해오던 것을 CLI로 하는 방법
     $.ajax({
         type: "POST",
         url: "/api/articles",
@@ -236,7 +202,7 @@ function writeArticle() {
         }
     });
 }
-/*
+
 // 메모를 수정합니다.
 function submitEdit(id) {
     // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
@@ -276,5 +242,5 @@ function deleteOne(id) {
         }
     })
 }
-*/
+
 

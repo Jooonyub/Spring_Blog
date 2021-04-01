@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<link rel="stylesheet" href="/css/style.css">-->
+    <link rel="stylesheet" href="/css/style.css">
+<!--    <link rel="stylesheet" href="../static/css/detail_style.css">-->
+
+    <title>️준엽이의 항해 블로그</title>
+    <link rel="shortcut icon" href="/images/favicon.png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+
+    <!--<script src="/articledetail.js"></script>-->
+<!--    <script src="/js/articledetail.js"></script>-->
+    <script src="/js/basic.js"></script>
+
+
+</head>
+
+<body class="background">
+
+<div class="wrap">
+    <div class="header">
+        <h2>⛵️나만의 항해 블로그⛵</h2>
+        <br>
+        <p>
+            게시글 조회 페이지
+        </p>
+    </div>
+    <!--<div class="area-write">
+        <input type="text" placeholder="게시글의 제목을 입력하세요" name="title" id="title">
+        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+                  rows="10"></textarea>
+        <img src="images/send.png" alt="" onclick="writePost()">
+    </div>-->
+
+    <div class="article area-read" id="show-article-datail" >
+
+        <div class="card cardblock">
+            <div class="metadata">
+                <div id='title' class="title">
+                    ${title}
+                </div>
+                <div id="username" class="username" >
+                    ${username}
+                </div>
+                <div id="createdat" class="createdat" >
+                    ${createdat}
+                </div>
+            </div>
+            <!--contents 조회/수정 영역-->
+            <div class="contents">
+                <div id="contents" class="contents" >
+                    ${contents}
+                </div>
+            </div>
+            <!--버튼 영역-->
+            <div class="footer-btns">
+                <div class="col-md-12 bg-light text-right">
+                    <button type="button" class="btn btn-primary" id="gobackBtn" onclick="window.location.href='/'">목록으로</button>
+                    <button type="button" class="btn btn-primary" id="article_edit_Btn" onclick="editArticle()">수정</button>
+                    <button type="button" class="btn btn-primary" id="article_delete_Btn" onclick="deleteArticle()">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+            <!--
+            <div class="">
+                <button type="button" class="footer btn btn-info btn-lg" id="gobackBtn" onclick="window.location.href='/'">목록으로</button>
+                <button type="button" class="footer btn btn-info btn-lg" id="article_edit_Btn" onclick="window.location.href='/'">수정</button>
+                <button type="button" class="footer btn btn-info btn-lg" id="article_delete_Btn" onclick="window.location.href='/'">삭제</button>
+            -->
+<!--                <img th:id="${article.edit}" th:onclick="|javascript:editPost('${article.id}')|" class="icon-start-edit" th:src="@{/images/edit.png}" alt="">-->
+<!--                <img th:id="${article.delete}" th:onclick="|javascript:deleteOne('${article.id}')|" class="icon-delete" th:src="@{/images/delete.png}" alt="">-->
+<!--                <img th:id="${article.submit}" th:onclick="|javascript:submitEdit('${article.id}')|" class="icon-end-edit" th:src="@{/images/done.png}" alt="">-->
+
+            <!--</div>-->
+
+
+
+    <div class="comments_container" id="comments_container">
+        <div class="comment_write" id="comment_write">
+            <!--textarea를 포함한 작성란, onclick-> 로그인 권한에 따라 popup창 alert-->
+            <div class="embed-submit-field">
+                <div class="input-group mb-3">
+                    <textarea class="comment_textarea form-control" name="" id="comment_textarea" cols="30" rows="3" placeholder="댓글을 입력하세요."></textarea>
+                    <!--<input type="" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">-->
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary comment_submit" type="button" onclick="create_comment()">Button</button>
+                    </div>
+                </div>
+                <!--<textarea
+                        class="comment_textarea"
+                        name=""
+                        id="comment_textarea"
+                        cols="30"
+                        rows="3"
+                        placeholder="댓글을 입력하세요."
+                        ></textarea>
+                        <button class="comment_submit" onclick="create_comment()">
+                            작성완료
+                        </button>-->
+
+            </div>
+
+
+        </div>
+        <div class="comments_box" id="comments_box">
+            <!--이부분은 댓글에 대한 table-->
+            <!--각 tr마다 button : 수정 / 삭제
+                1) 사용자가 누구인지에 따라서 수정 및 삭제가 가능하게 보여준다.
+                2) 아예 다 띄워놓고 눌렀을때 권한에 따라서 alert를 띄운다.
+            -->
+            <div class="comment__card">
+                <div class="comment__card-header">
+                    username<span class="comment-date">2021-03-29</span>
+                </div>
+                <div class="comment__card-body">
+                    <div class="commnt">댓글댓글</div>
+                    <div class="comment-btn">
+                        <i class="far fa-edit"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment__card">
+                <div class="comment__card-header">
+                    username<span class="comment-date">2021-03-29</span>
+                </div>
+                <div class="comment__card-body">
+                    <div class="comment__card-body-left">
+                        <div class="comment">댓글댓글</div>
+                        <div class="edit-commnet-textarea-wrap">
+                <textarea
+                        class="edit-commnet-textarea"
+                        name=""
+                        cols="30"
+                        rows="10"
+                ></textarea>
+                        </div>
+                    </div>
+                    <div class="comment-btn">
+                        <div class="befor">
+                            <i class="far fa-edit"></i>
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                        <div class="after">
+                            <i class="fas fa-check"></i>
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment__card">
+                <div class="comment__card-header">
+                    username<span class="comment-date">2021-03-29</span>
+                </div>
+                <div class="comment__card-body">
+                    <div class="commendt">댓글댓글</div>
+                    <div class="comment-btn">
+                        <i class="far fa-edit"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+</html>
